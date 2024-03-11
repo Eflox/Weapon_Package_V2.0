@@ -6,7 +6,6 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using Weapons;
 
 /// <summary>
 /// Scriptable Object holding the configuration of the weapon
@@ -17,5 +16,5 @@ public class WeaponConfig : ScriptableObject
     /// <summary>
     /// Attributes for the weapon
     /// </summary>
-    public List<IWeaponAttributeConfig> Attributes = new List<IWeaponAttributeConfig>();
+    public List<ScriptableObject> Attributes = new List<ScriptableObject>();
 }

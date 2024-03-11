@@ -8,6 +8,6 @@ namespace Weapons
 {
     public interface IWeaponAttributeService
     {
-        void Initialize(IWeaponAttributeConfig config);
+        void Initialize();
     }
 }

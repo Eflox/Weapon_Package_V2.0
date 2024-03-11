@@ -11,7 +11,7 @@ namespace Weapons
     /// <summary>
     /// Bounce attribute for weapons
     /// </summary>
-    [CreateAssetMenu(fileName = "New Attribute", menuName = "Weapons/Weapon Attribute")]
+    [CreateAssetMenu(fileName = "New Attribute", menuName = "Weapons/Attributes/Bounce")]
     public class BounceAttributeConfig : ScriptableObject, IWeaponAttributeConfig
     {
         public int Count = 1;
@@ -20,7 +20,7 @@ namespace Weapons
 
         public BounceAttributeConfig()
         {
-            WeaponAttributeService = new BounceAttributeService();
+            WeaponAttributeService = new BounceAttributeService(this);
         }
     }
 }

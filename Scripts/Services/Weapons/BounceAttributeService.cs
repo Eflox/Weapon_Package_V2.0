@@ -12,10 +12,16 @@ namespace Weapons
     public class BounceAttributeService : IWeaponAttributeService, IUsesLifeCycle
     {
         private bool _finished;
+        private BounceAttributeConfig _config;
 
-        public void Initialize(IWeaponAttributeConfig config)
+        public BounceAttributeService(IWeaponAttributeConfig config)
         {
-            throw new System.NotImplementedException();
+            _config = (BounceAttributeConfig)config;
+        }
+
+        public void Initialize()
+        {
+            _finished = false;
         }
 
         public bool IsActive()
