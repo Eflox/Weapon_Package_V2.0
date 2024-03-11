@@ -7,10 +7,10 @@
 namespace Weapons
 {
     /// <summary>
-    /// Interface for attributes
+    /// Attributes that have a start and end
     /// </summary>
-    public interface IWeaponAttribute
+    public interface IUsesLifeCycle
     {
-        bool IsActive { get; set; }
+        bool IsActive();
     }
 }

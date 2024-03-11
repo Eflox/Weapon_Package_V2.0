@@ -6,12 +6,16 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using Weapons;
 
 /// <summary>
 /// Scriptable Object holding the configuration of the weapon
 /// </summary>
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
+[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapons/Weapon")]
 public class WeaponConfig : ScriptableObject
 {
-    public List<IWeaponAttribute> Attributes = new List<IWeaponAttribute>();
+    /// <summary>
+    /// Attributes for the weapon
+    /// </summary>
+    public List<IWeaponAttributeConfig> Attributes = new List<IWeaponAttributeConfig>();
 }
