@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c72962db38c60a40a814a1a4c0e340d, type: 3}
   m_Name: Test_Weapon
   m_EditorClassIdentifier: 
-  _attributesInspector: []
+  _attributesInspector:
+  - {fileID: 11400000, guid: 71c00d3060001394faacaaf2f69d901a, type: 2}

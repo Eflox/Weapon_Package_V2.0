@@ -17,7 +17,6 @@ namespace Weapons
 
         private void Start()
         {
-            new InitializeAttributesService(config.Attributes);
         }
     }
 }
