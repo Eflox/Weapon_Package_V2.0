@@ -4,6 +4,7 @@
  * Contact: c.dansembourg@icloud.com
  */
 
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Weapons
@@ -14,6 +15,8 @@ namespace Weapons
     public class WeaponController : MonoBehaviour
     {
         public WeaponConfig config;
+
+        private List<IWeaponAttributeService> _weaponAttributeService;
 
         private void Start()
         {
