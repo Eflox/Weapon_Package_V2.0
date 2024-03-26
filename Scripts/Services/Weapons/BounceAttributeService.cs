@@ -4,12 +4,14 @@
  * Contact: c.dansembourg@icloud.com
  */
 
+using UnityEngine;
+
 namespace Weapons
 {
     /// <summary>
     /// Service handling the bounce attribute
     /// </summary>
-    public class BounceAttributeService : IWeaponAttributeService, IUsesLifeCycle, IUsesInitiation
+    public class BounceAttributeService : IWeaponAttributeService, IUsesInitiation, IUsesLifeCycle, IUsesFrameUpdate, IUsesOnHit
     {
         private bool _finished;
         private BounceAttributeConfig _config;
@@ -27,6 +29,12 @@ namespace Weapons
         public bool IsActive()
         {
             return _finished;
+        }
+
+        public void OnHit(GameObject projectile, GameObject collidedObject)
+        {
+            DestroyUtility.DestroyGameObject(collidedObject);
+            DestroyUtility.DestroyGameObject(projectile);
         }
     }
 }

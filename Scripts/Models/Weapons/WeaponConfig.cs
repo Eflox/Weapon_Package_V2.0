@@ -14,12 +14,23 @@ using Weapons;
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapons/Weapon")]
 public class WeaponConfig : ScriptableObject
 {
-    /// <summary>
-    /// Attributes for the weapon
-    /// </summary>
+    [SerializeField] private List<ScriptableObject> _attributesInspector = new List<ScriptableObject>();
+
     public List<IWeaponAttributeConfig> Attributes = new List<IWeaponAttributeConfig>();
 
-    [SerializeField] private List<ScriptableObject> _attributesInspector = new List<ScriptableObject>();
+    [Range(1, 20)] public int FireRate = 3;
+    [Range(1, 20)] public float ProjectileSpeed = 2;
+
+    public Sprite WeaponSprite;
+    public Sprite ProjectileSprite;
+
+    public LayerMask CollisionLayers;
+
+    public LayerMask WeaponLayer;
+    public int WeaponSortingOrder = 10;
+
+    public LayerMask ProjectileLayer;
+    public int ProjectileSortingOrder = 11;
 
     private void OnValidate()
     {

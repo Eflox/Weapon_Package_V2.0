@@ -14,3 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attributesInspector:
   - {fileID: 11400000, guid: 71c00d3060001394faacaaf2f69d901a, type: 2}
+  _fireRate: 3
+  WeaponSprite: {fileID: -1441569358, guid: 011e339ab27a0584a8e269fb8053fcd6, type: 3}
+  ProjectileSprite: {fileID: 1561542153, guid: 011e339ab27a0584a8e269fb8053fcd6, type: 3}
+  CollisionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  WeaponLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  WeaponSortingOrder: 10
+  ProjectileLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  ProjectileSortingOrder: 11
