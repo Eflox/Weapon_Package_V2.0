@@ -20,7 +20,7 @@ namespace Weapons
 
         private void Start()
         {
-            _attributes = Config.Attributes.OfType<IWeaponAttributeService>().ToList();
+            Config.Attributes.ToList().ForEach(attribute => _attributes.Add(attribute.WeaponAttributeService));
 
             var attributesUsingInitiation = _attributes.OfType<IUsesInitiation>();
             attributesUsingInitiation.OfType<IUsesInitiation>().ToList().ForEach(service => service.Initialize());
