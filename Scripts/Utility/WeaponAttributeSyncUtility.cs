@@ -11,7 +11,7 @@ namespace Weapons
 {
     public static class WeaponAttributeSyncUtility
     {
-        public static void SyncAttributes(List<IWeaponAttributeConfig> targetList, List<ScriptableObject> sourceList)
+        public static void SyncAttributes(List<IWeaponAttribute> targetList, List<ScriptableObject> sourceList)
         {
             targetList.Clear();
 
@@ -19,7 +19,7 @@ namespace Weapons
 
             foreach (var attribute in sourceList)
             {
-                if (attribute is IWeaponAttributeConfig config)
+                if (attribute is IWeaponAttribute config)
                 {
                     targetList.Add(config);
                     Debug.Log($"Attribute {attribute.name} added");

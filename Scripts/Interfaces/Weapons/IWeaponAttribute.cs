@@ -6,7 +6,7 @@
 
 namespace Weapons
 {
-    public interface IWeaponAttributeService
+    public interface IWeaponAttribute
     {
     }
 }

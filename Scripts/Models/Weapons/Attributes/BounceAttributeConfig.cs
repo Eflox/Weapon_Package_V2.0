@@ -12,16 +12,11 @@ namespace Weapons
     /// Bounce attribute for weapons
     /// </summary>
     [CreateAssetMenu(fileName = "New Attribute", menuName = "Weapons/Attributes/Bounce")]
-    public class BounceAttributeConfig : ScriptableObject, IWeaponAttributeConfig
+    public class BounceAttributeConfig : ScriptableObject, IWeaponAttribute
     {
         [SerializeField] private int _count = 1;
         [SerializeField] private TargetFindingOptions TargetFindingOption = TargetFindingOptions.Random;
 
-        public IWeaponAttributeService WeaponAttributeService { get; }
-
-        public BounceAttributeConfig()
-        {
-            WeaponAttributeService = new BounceAttributeService(this);
-        }
+        public BounceAttributeService Service = new BounceAttributeService(this);
     }
 }
