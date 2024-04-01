@@ -11,14 +11,14 @@ namespace Weapons
     /// <summary>
     /// Service handling the bounce attribute
     /// </summary>
-    public class BounceAttributeService : IWeaponAttribute, IUsesInitiation, IUsesLifeCycle, IUsesFrameUpdate, IUsesOnHit
+    public class BounceAttributeService : IUsesInitiation, IUsesLifeCycle, IUsesFrameUpdate, IUsesOnHit
     {
         private bool _finished;
         private BounceAttributeConfig _config;
 
-        public BounceAttributeService(IWeaponAttribute config)
+        public BounceAttributeService(BounceAttributeConfig config)
         {
-            _config = (BounceAttributeConfig)config;
+            _config = config;
         }
 
         public void Initialize()

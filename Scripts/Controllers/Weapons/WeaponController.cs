@@ -4,7 +4,6 @@
  * Contact: c.dansembourg@icloud.com
  */
 
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -16,13 +15,10 @@ namespace Weapons
     public class WeaponController : MonoBehaviour
     {
         [SerializeField] public WeaponConfig Config;
-        private List<IWeaponAttributeService> _attributes;
 
         private void Start()
         {
-            Config.Attributes.ToList().ForEach(attribute => _attributes.Add(attribute.WeaponAttributeService));
-
-            var attributesUsingInitiation = _attributes.OfType<IUsesInitiation>();
+            var attributesUsingInitiation = Config.Attributes.OfType<IUsesInitiation>();
             attributesUsingInitiation.OfType<IUsesInitiation>().ToList().ForEach(service => service.Initialize());
         }
 
@@ -45,7 +41,7 @@ namespace Weapons
 
         public void OnHit(GameObject projectile, GameObject collidedObject)
         {
-            var attributesUsingInitiation = _attributes.OfType<IUsesOnHit>();
+            var attributesUsingInitiation = Config.Attributes.OfType<IUsesOnHit>();
             attributesUsingInitiation.OfType<IUsesOnHit>().ToList().ForEach(service => service.OnHit(projectile, collidedObject));
             Debug.Log("Projectile Hit");
         }
