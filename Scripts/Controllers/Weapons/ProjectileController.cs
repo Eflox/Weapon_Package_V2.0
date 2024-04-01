@@ -15,8 +15,7 @@ namespace Weapons
     {
         public WeaponController WeaponController;
         public Rigidbody2D Rigibody2D;
-
-        private SpriteRenderer _spriteRenderer;
+        public SpriteRenderer SpriteRenderer;
 
         private List<IUsesLifeCycle> _attributesUsingLifeCycle = new List<IUsesLifeCycle>();
         private List<IUsesFrameUpdate> _attributesUsingFrameUpdate = new List<IUsesFrameUpdate>();
@@ -61,9 +60,9 @@ namespace Weapons
 
         private void SetupSpriteRenderer()
         {
-            _spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
-            _spriteRenderer.sprite = WeaponController.Config.ProjectileSprite;
-            _spriteRenderer.sortingOrder = WeaponController.Config.ProjectileSortingOrder;
+            SpriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
+            SpriteRenderer.sprite = WeaponController.Config.ProjectileSprite;
+            SpriteRenderer.sortingOrder = WeaponController.Config.ProjectileSortingOrder;
         }
 
         private void SetupCollider()
@@ -71,7 +70,7 @@ namespace Weapons
             BoxCollider2D collider = this.gameObject.AddComponent<BoxCollider2D>();
             collider.isTrigger = true;
 
-            var dimensions = UtilityFunctions.GetBoxCollSizeFromSprite(_spriteRenderer);
+            var dimensions = UtilityFunctions.GetBoxCollSizeFromSprite(SpriteRenderer);
 
             collider.size = dimensions.Item1;
             collider.offset = dimensions.Item2;

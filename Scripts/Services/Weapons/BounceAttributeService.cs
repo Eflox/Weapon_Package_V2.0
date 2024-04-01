@@ -41,10 +41,10 @@ namespace Weapons
             if (_bounceCount-- <= 0)
                 _isActive = false;
             else
-                FindAndDirectToNextTarget(collidedObject);
+                CalculateBounce(collidedObject);
         }
 
-        private void FindAndDirectToNextTarget(GameObject excludedObject)
+        private void CalculateBounce(GameObject excludedObject)
         {
             var enemies = GameObject.FindGameObjectsWithTag("Enemy")
                             .Where(obj => obj != excludedObject)
