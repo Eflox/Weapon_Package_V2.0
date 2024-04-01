@@ -1,13 +1,12 @@
 /*
  * Script Author: Charles d'Ansembourg
- * Creation Date: 11/03/2024
+ * Creation Date: 01/04/2024
  * Contact: c.dansembourg@icloud.com
  */
 
 namespace Weapons
 {
-    public interface IWeaponAttribute
+    public interface IAttributeService
     {
-        IAttributeService Service { get; }
     }
 }

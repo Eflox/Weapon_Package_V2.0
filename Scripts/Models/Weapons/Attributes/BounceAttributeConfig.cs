@@ -17,6 +17,6 @@ namespace Weapons
         [SerializeField] private int _count = 1;
         [SerializeField] private TargetFindingOptions TargetFindingOption = TargetFindingOptions.Random;
 
-        public BounceAttributeService Service => new BounceAttributeService(this);
+        IAttributeService IWeaponAttribute.Service => new BounceAttributeService(this);
     }
 }
