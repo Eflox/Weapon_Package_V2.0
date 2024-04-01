@@ -7,14 +7,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utils;
 
 namespace Weapons
 {
     public class ProjectileController : MonoBehaviour
     {
         public WeaponController WeaponController;
+        public Rigidbody2D Rigibody2D;
 
-        private List<IUsesInitiation> _attributesUsingInitiation = new List<IUsesInitiation>();
+        private SpriteRenderer _spriteRenderer;
+
         private List<IUsesLifeCycle> _attributesUsingLifeCycle = new List<IUsesLifeCycle>();
         private List<IUsesFrameUpdate> _attributesUsingFrameUpdate = new List<IUsesFrameUpdate>();
         private List<IUsesOnHit> _attributesUsingOnHit = new List<IUsesOnHit>();
@@ -29,8 +32,6 @@ namespace Weapons
             SetupSpriteRenderer();
             SetupCollider();
             SetupRigidbody();
-
-            _attributesUsingInitiation.ForEach(attribute => attribute.Initialize());
         }
 
         private void SetupAttributes(List<IWeaponAttributeConfig> attributeConfigs)
@@ -39,13 +40,11 @@ namespace Weapons
 
             foreach (var attributeConfig in attributeConfigs)
             {
-                var serviceInstance = attributeConfig.CreateService(); // This method needs to be defined in your interface and implemented in your configs
+                var serviceInstance = attributeConfig.CreateService();
                 attributeServices.Add(serviceInstance);
             }
 
-            _attributesUsingInitiation = attributeServices
-                .OfType<IUsesInitiation>()
-                    .ToList();
+            attributeServices.ForEach(attribute => attribute.Initialize(this));
 
             _attributesUsingLifeCycle = attributeServices
                 .OfType<IUsesLifeCycle>()
@@ -62,23 +61,28 @@ namespace Weapons
 
         private void SetupSpriteRenderer()
         {
-            SpriteRenderer spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = WeaponController.Config.ProjectileSprite;
-            spriteRenderer.sortingOrder = WeaponController.Config.ProjectileSortingOrder;
+            _spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
+            _spriteRenderer.sprite = WeaponController.Config.ProjectileSprite;
+            _spriteRenderer.sortingOrder = WeaponController.Config.ProjectileSortingOrder;
         }
 
         private void SetupCollider()
         {
             BoxCollider2D collider = this.gameObject.AddComponent<BoxCollider2D>();
             collider.isTrigger = true;
+
+            var dimensions = UtilityFunctions.GetBoxCollSizeFromSprite(_spriteRenderer);
+
+            collider.size = dimensions.Item1;
+            collider.offset = dimensions.Item2;
         }
 
         private void SetupRigidbody()
         {
-            Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
-            rb.gravityScale = 0;
-            rb.isKinematic = false;
-            rb.velocity = transform.right * WeaponController.Config.ProjectileSpeed;
+            Rigibody2D = this.gameObject.AddComponent<Rigidbody2D>();
+            Rigibody2D.gravityScale = 0;
+            Rigibody2D.isKinematic = false;
+            Rigibody2D.velocity = transform.right * WeaponController.Config.ProjectileSpeed;
         }
 
         #endregion Initiatation
@@ -86,7 +90,7 @@ namespace Weapons
         private void OnTriggerEnter2D(Collider2D obj)
         {
             if (((1 << obj.gameObject.layer) & WeaponController.Config.CollisionLayers) != 0)
-                _attributesUsingOnHit.ForEach(attribute => attribute.OnHit(this.gameObject, obj.gameObject));
+                _attributesUsingOnHit.ForEach(attribute => attribute.OnHit(obj.gameObject));
 
             if (_attributesUsingLifeCycle.Count > 0)
                 RemoveNonActiveAttributeServices();
@@ -105,15 +109,14 @@ namespace Weapons
             {
                 _attributesUsingLifeCycle.Remove(attribute);
 
-                if (attribute is IUsesInitiation)
-                    _attributesUsingInitiation.Remove(attribute as IUsesInitiation);
                 if (attribute is IUsesFrameUpdate)
                     _attributesUsingFrameUpdate.Remove(attribute as IUsesFrameUpdate);
                 if (attribute is IUsesOnHit)
                     _attributesUsingOnHit.Remove(attribute as IUsesOnHit);
             }
 
-            Debug.Log($"Removed Attributes: {inactiveAttributes.Count}");
+            if (inactiveAttributes.Count > 0)
+                Debug.Log($"Removed Attributes: {inactiveAttributes.Count}");
         }
     }
 }

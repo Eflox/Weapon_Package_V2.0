@@ -8,5 +8,6 @@ namespace Weapons
 {
     public interface IAttributeService
     {
+        void Initialize(ProjectileController projectileController);
     }
 }

@@ -10,6 +10,6 @@ namespace Weapons
 {
     public interface IUsesOnHit
     {
-        void OnHit(GameObject projectile, GameObject collidedObject);
+        void OnHit(GameObject collidedObject);
     }
 }

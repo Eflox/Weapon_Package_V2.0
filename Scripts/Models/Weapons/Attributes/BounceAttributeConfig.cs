@@ -14,8 +14,8 @@ namespace Weapons
     [CreateAssetMenu(fileName = "New Attribute", menuName = "Weapons/Attributes/Bounce")]
     public class BounceAttributeConfig : ScriptableObject, IWeaponAttributeConfig
     {
-        public readonly int Count = 1;
-        public readonly TargetFindingOptions TargetFindingOption = TargetFindingOptions.Random;
+        public int Count;
+        public TargetFindingOptions TargetFindingOption = TargetFindingOptions.Random;
 
         public IAttributeService CreateService() => new BounceAttributeService(this);
     }
