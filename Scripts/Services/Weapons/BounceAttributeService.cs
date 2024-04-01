@@ -11,30 +11,47 @@ namespace Weapons
     /// <summary>
     /// Service handling the bounce attribute
     /// </summary>
-    public class BounceAttributeService : IAttributeService, IUsesInitiation, IUsesLifeCycle, IUsesFrameUpdate, IUsesOnHit
+    public class BounceAttributeService : IAttributeService, IUsesProjectileInitiation, IUsesInitiation, IUsesLifeCycle, IUsesFrameUpdate, IUsesOnHit
     {
-        private bool _finished;
+        private bool _isActive;
         private BounceAttributeConfig _config;
+        private int _bounceCount;
 
-        public BounceAttributeService(BounceAttributeConfig config)
+        public BounceAttributeService(IWeaponAttributeConfig config)
         {
-            _config = config;
+            _config = (BounceAttributeConfig)config;
+        }
+
+        public void FrameUpdate()
+        {
         }
 
         public void Initialize()
         {
-            _finished = false;
+            _isActive = true;
+            _bounceCount = _config.Count;
         }
 
         public bool IsActive()
         {
-            return _finished;
+            return _isActive;
         }
 
         public void OnHit(GameObject projectile, GameObject collidedObject)
         {
-            DestroyUtility.DestroyGameObject(collidedObject);
-            DestroyUtility.DestroyGameObject(projectile);
+            Debug.Log("Called Bounce Service");
+
+            _bounceCount--;
+
+            if (_bounceCount == 0)
+                _isActive = false;
+
+            //DestroyUtility.DestroyGameObject(collidedObject);
+            //DestroyUtility.DestroyGameObject(projectile);
+        }
+
+        public void ProjectileInitialize(GameObject projectile)
+        {
         }
     }
 }

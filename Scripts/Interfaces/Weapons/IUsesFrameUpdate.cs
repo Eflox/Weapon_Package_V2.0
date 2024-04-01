@@ -8,5 +8,6 @@ namespace Weapons
 {
     public interface IUsesFrameUpdate
     {
+        void FrameUpdate();
     }
 }

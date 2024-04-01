@@ -16,7 +16,7 @@ public class WeaponConfig : ScriptableObject
 {
     [SerializeField] private List<ScriptableObject> _attributesInspector = new List<ScriptableObject>();
 
-    public List<IWeaponAttribute> Attributes = new List<IWeaponAttribute>();
+    public List<IWeaponAttributeConfig> Attributes = new List<IWeaponAttributeConfig>();
 
     [Range(1, 20)] public int FireRate = 3;
     [Range(1, 20)] public float ProjectileSpeed = 2;
