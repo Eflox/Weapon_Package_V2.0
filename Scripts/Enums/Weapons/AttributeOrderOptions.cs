@@ -11,6 +11,7 @@ namespace Weapons
     /// </summary>
     public enum AttributeOrderOptions
     {
+        Always = 0,
         Bounce = 1,
         Pierce = 2
     }

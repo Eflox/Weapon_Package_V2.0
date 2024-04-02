@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c72962db38c60a40a814a1a4c0e340d, type: 3}
   m_Name: Test_Weapon
   m_EditorClassIdentifier: 
-  _attributesInspector:
-  - {fileID: 11400000, guid: 71c00d3060001394faacaaf2f69d901a, type: 2}
+  _attributesInspector: []
   FireRate: 3
   ProjectileSpeed: 3.58
   WeaponSprite: {fileID: -1441569358, guid: 011e339ab27a0584a8e269fb8053fcd6, type: 3}
