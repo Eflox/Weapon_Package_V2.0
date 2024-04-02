@@ -53,22 +53,26 @@ namespace Weapons
                 return;
             }
 
-            GameObject closestEnemy = null;
-            float closestDistance = float.MaxValue;
-
-            foreach (GameObject enemy in enemies)
+            GameObject newTarget = _config.TargetFindingOption switch
             {
-                float distance = (enemy.transform.position - _projectileController.transform.position).sqrMagnitude;
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestEnemy = enemy;
-                }
-            }
+                TargetFindingOptions.Closest => enemies
+                    .Select(enemy => new { Enemy = enemy, Distance = (enemy.transform.position - _projectileController.transform.position).sqrMagnitude })
+                    .OrderBy(item => item.Distance)
+                    .FirstOrDefault()?.Enemy,
 
-            if (closestEnemy != null)
+                TargetFindingOptions.Farthest => enemies
+                    .Select(enemy => new { Enemy = enemy, Distance = (enemy.transform.position - _projectileController.transform.position).sqrMagnitude })
+                    .OrderByDescending(item => item.Distance)
+                    .FirstOrDefault()?.Enemy,
+
+                TargetFindingOptions.Random => enemies.Any() ? enemies.ElementAtOrDefault(UnityEngine.Random.Range(0, enemies.Count())) : null,
+
+                _ => null
+            };
+
+            if (newTarget != null)
             {
-                Vector2 direction = closestEnemy.transform.position - _projectileController.transform.position;
+                Vector2 direction = newTarget.transform.position - _projectileController.transform.position;
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 _projectileController.transform.rotation = Quaternion.Euler(0, 0, angle);
 

@@ -17,6 +17,7 @@ namespace Weapons
         private HomeAttributeConfig _config;
         private ProjectileController _projectileController;
         private GameObject _target;
+        private float _currentRotation;
 
         public HomeAttributeService(IWeaponAttributeConfig config)
         {
@@ -27,6 +28,7 @@ namespace Weapons
         {
             _projectileController = projectileController;
             IsActive = true;
+            _currentRotation = 2;
         }
 
         public void FrameUpdate()
@@ -50,16 +52,16 @@ namespace Weapons
 
         private void HomeToTarget()
         {
-            Vector2 directionToTarget = _target.transform.position - _projectileController.transform.position;
-            directionToTarget.Normalize();
+            if (_currentRotation < 10) _currentRotation += _config.HomingAcceleration;
 
-            Vector2 newVelocity = Vector2.MoveTowards(_projectileController.Rigidbody2D.velocity, directionToTarget * _projectileController.Rigidbody2D.velocity.magnitude, _config.HomingAcceleration * Time.deltaTime);
+            Vector2 directionToTarget = (_target.transform.position - _projectileController.transform.position).normalized;
+            float angleToTarget = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
+            Quaternion qTarget = Quaternion.AngleAxis(angleToTarget, Vector3.forward);
+            _projectileController.transform.rotation = Quaternion.Slerp(_projectileController.transform.rotation, qTarget, Time.deltaTime * _currentRotation);
+
+            float currentSpeed = _projectileController.Rigidbody2D.velocity.magnitude;
+            Vector2 newVelocity = _projectileController.transform.right * currentSpeed;
             _projectileController.Rigidbody2D.velocity = newVelocity;
-
-            float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
-
-            Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            _projectileController.transform.rotation = Quaternion.RotateTowards(_projectileController.transform.rotation, targetRotation, _projectileController.Rigidbody2D.velocity.magnitude * Time.deltaTime);
         }
 
         public void OnHit(GameObject collidedObject)

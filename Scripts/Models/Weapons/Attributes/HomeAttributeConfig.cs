@@ -12,7 +12,6 @@ namespace Weapons
     public class HomeAttributeConfig : ScriptableObject, IWeaponAttributeConfig
     {
         public float HomingRadius;
-        public float HomingRotationSpeed;
         public float HomingAcceleration;
 
         public IAttributeService CreateService() => new HomeAttributeService(this);

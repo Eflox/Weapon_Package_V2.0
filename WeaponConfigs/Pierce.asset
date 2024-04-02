@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 790ea794c03c2164991a13ee450264cd, type: 3}
   m_Name: Pierce
   m_EditorClassIdentifier: 
-  Count: 2
+  Count: 1
   Deflection: 10
