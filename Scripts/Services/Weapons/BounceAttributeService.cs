@@ -4,7 +4,6 @@
  * Contact: c.dansembourg@icloud.com
  */
 
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -15,12 +14,11 @@ namespace Weapons
     /// </summary>
     public class BounceAttributeService : IAttributeService, IUsesLifeCycle, IUsesOnHit
     {
-        public int Order => 1;
-        public Guid Id { get; } = Guid.NewGuid();
+        public int Order => (int)AttributeOrderOptions.Bounce;
+        public bool IsActive { get; private set; }
 
         private ProjectileController _projectileController;
         private BounceAttributeConfig _config;
-        private bool _isActive;
         private int _bounceCount;
 
         public BounceAttributeService(IWeaponAttributeConfig config)
@@ -31,19 +29,14 @@ namespace Weapons
         public void Initialize(ProjectileController projectileController)
         {
             _projectileController = projectileController;
-            _isActive = true;
+            IsActive = true;
             _bounceCount = _config.Count;
-        }
-
-        public bool IsActive()
-        {
-            return _isActive;
         }
 
         public void OnHit(GameObject collidedObject)
         {
             if (_bounceCount-- <= 0)
-                _isActive = false;
+                IsActive = false;
             else
                 CalculateBounce(collidedObject);
         }
@@ -56,7 +49,7 @@ namespace Weapons
 
             if (enemies.Count == 0)
             {
-                _isActive = false;
+                IsActive = false;
                 return;
             }
 
@@ -79,8 +72,8 @@ namespace Weapons
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 _projectileController.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-                float currentSpeed = _projectileController.Rigibody2D.velocity.magnitude;
-                _projectileController.Rigibody2D.velocity = _projectileController.transform.right * currentSpeed;
+                float currentSpeed = _projectileController.Rigidbody2D.velocity.magnitude;
+                _projectileController.Rigidbody2D.velocity = _projectileController.transform.right * currentSpeed;
             }
         }
     }

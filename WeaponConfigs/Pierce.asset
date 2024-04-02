@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 881586eb54c44534eaa0f4ac9883eb74, type: 3}
-  m_Name: Bounce Attribute
+  m_Script: {fileID: 11500000, guid: 790ea794c03c2164991a13ee450264cd, type: 3}
+  m_Name: Pierce
   m_EditorClassIdentifier: 
-  Count: 3
-  TargetFindingOption: 0
+  Count: 0
+  Deflection: 0

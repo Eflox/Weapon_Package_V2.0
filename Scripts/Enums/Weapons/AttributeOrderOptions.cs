@@ -1,16 +1,17 @@
 /*
  * Script Author: Charles d'Ansembourg
- * Creation Date: 11/03/2024
+ * Creation Date: 02/04/2024
  * Contact: c.dansembourg@icloud.com
  */
 
 namespace Weapons
 {
     /// <summary>
-    /// Attributes that have a start and end
+    /// Order of attributes execution
     /// </summary>
-    public interface IUsesLifeCycle
+    public enum AttributeOrderOptions
     {
-        bool IsActive { get; }
+        Bounce = 1,
+        Pierce = 2
     }
 }

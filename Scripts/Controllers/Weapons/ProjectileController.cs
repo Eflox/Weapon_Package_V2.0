@@ -14,7 +14,7 @@ namespace Weapons
     public class ProjectileController : MonoBehaviour
     {
         public WeaponController WeaponController;
-        public Rigidbody2D Rigibody2D;
+        public Rigidbody2D Rigidbody2D;
         public SpriteRenderer SpriteRenderer;
 
         private List<IUsesLifeCycle> _attributesUsingLifeCycle = new List<IUsesLifeCycle>();
@@ -78,32 +78,35 @@ namespace Weapons
 
         private void SetupRigidbody()
         {
-            Rigibody2D = this.gameObject.AddComponent<Rigidbody2D>();
-            Rigibody2D.gravityScale = 0;
-            Rigibody2D.isKinematic = false;
-            Rigibody2D.velocity = transform.right * WeaponController.Config.ProjectileSpeed;
+            Rigidbody2D = this.gameObject.AddComponent<Rigidbody2D>();
+            Rigidbody2D.gravityScale = 0;
+            Rigidbody2D.isKinematic = false;
+            Rigidbody2D.velocity = transform.right * WeaponController.Config.ProjectileSpeed;
         }
 
         #endregion Initiatation
 
         private void OnTriggerEnter2D(Collider2D obj)
         {
-            if (((1 << obj.gameObject.layer) & WeaponController.Config.CollisionLayers) != 0)
-            {
-                _attributesUsingOnHit
-                    .Where(attribute => attribute.Order == 0)
-                    .ToList()
-                    .ForEach(attribute => attribute.OnHit(obj.gameObject));
+            if (((1 << obj.gameObject.layer) & WeaponController.Config.CollisionLayers) == 0)
+                return;
 
-                _attributesUsingOnHit
-                    .Where(attribute => attribute.Order > 0)
-                    .OrderBy(attribute => attribute.Order)
-                    .FirstOrDefault()?
-                    .OnHit(obj.gameObject);
-            }
+            _attributesUsingOnHit
+                .Where(attribute => attribute.Order == 0)
+                .ToList()
+                .ForEach(attribute => attribute.OnHit(obj.gameObject));
+
+            _attributesUsingOnHit
+                .Where(attribute => attribute.Order > 0)
+                .OrderBy(attribute => attribute.Order)
+                .FirstOrDefault()?
+                .OnHit(obj.gameObject);
 
             if (_attributesUsingLifeCycle.Count > 0)
                 RemoveNonActiveAttributeServices();
+
+            if (_attributesUsingOnHit.Count == 0)
+                Destroy(gameObject);
         }
 
         private void Update()
@@ -113,7 +116,7 @@ namespace Weapons
 
         private void RemoveNonActiveAttributeServices()
         {
-            var inactiveAttributes = _attributesUsingLifeCycle.Where(attribute => !attribute.IsActive()).ToList();
+            var inactiveAttributes = _attributesUsingLifeCycle.Where(attribute => !attribute.IsActive).ToList();
 
             foreach (var attribute in inactiveAttributes)
             {
