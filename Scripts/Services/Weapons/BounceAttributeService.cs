@@ -4,6 +4,7 @@
  * Contact: c.dansembourg@icloud.com
  */
 
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -14,6 +15,9 @@ namespace Weapons
     /// </summary>
     public class BounceAttributeService : IAttributeService, IUsesLifeCycle, IUsesOnHit
     {
+        public int Order => 1;
+        public Guid Id { get; } = Guid.NewGuid();
+
         private ProjectileController _projectileController;
         private BounceAttributeConfig _config;
         private bool _isActive;
@@ -50,7 +54,11 @@ namespace Weapons
                             .Where(obj => obj != excludedObject)
                             .ToList();
 
-            if (enemies.Count == 0) return;
+            if (enemies.Count == 0)
+            {
+                _isActive = false;
+                return;
+            }
 
             GameObject closestEnemy = null;
             float closestDistance = float.MaxValue;

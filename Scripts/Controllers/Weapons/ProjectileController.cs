@@ -89,7 +89,18 @@ namespace Weapons
         private void OnTriggerEnter2D(Collider2D obj)
         {
             if (((1 << obj.gameObject.layer) & WeaponController.Config.CollisionLayers) != 0)
-                _attributesUsingOnHit.ForEach(attribute => attribute.OnHit(obj.gameObject));
+            {
+                _attributesUsingOnHit
+                    .Where(attribute => attribute.Order == 0)
+                    .ToList()
+                    .ForEach(attribute => attribute.OnHit(obj.gameObject));
+
+                _attributesUsingOnHit
+                    .Where(attribute => attribute.Order > 0)
+                    .OrderBy(attribute => attribute.Order)
+                    .FirstOrDefault()?
+                    .OnHit(obj.gameObject);
+            }
 
             if (_attributesUsingLifeCycle.Count > 0)
                 RemoveNonActiveAttributeServices();

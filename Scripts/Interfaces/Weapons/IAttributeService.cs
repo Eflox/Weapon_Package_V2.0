@@ -4,10 +4,14 @@
  * Contact: c.dansembourg@icloud.com
  */
 
+using System;
+
 namespace Weapons
 {
     public interface IAttributeService
     {
+        Guid Id { get; }
+
         void Initialize(ProjectileController projectileController);
     }
 }
