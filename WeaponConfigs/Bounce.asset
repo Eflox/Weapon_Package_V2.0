@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881586eb54c44534eaa0f4ac9883eb74, type: 3}
   m_Name: Bounce
   m_EditorClassIdentifier: 
-  Count: 2
+  Count: 1
   TargetFindingOption: 0

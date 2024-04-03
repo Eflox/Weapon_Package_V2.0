@@ -32,14 +32,24 @@ namespace Weapons
 
         public void OnHit(GameObject collidedObject)
         {
-            if (_pierceCount-- <= 0)
+            if (_pierceCount <= 0)
+            {
                 IsActive = false;
-            else
-                CalculatePierce();
+                return;
+            }
+
+            CalculatePierce();
+
+            _pierceCount--;
+
+            if (_pierceCount == 0)
+                IsActive = false;
         }
 
         private void CalculatePierce()
         {
+            Debug.Log("Pierce");
+
             var currentSpeed = _projectileController.Rigidbody2D.velocity.magnitude;
             var randomDeflection = Random.Range(-_config.Deflection, _config.Deflection);
             _projectileController.transform.Rotate(0, 0, randomDeflection);

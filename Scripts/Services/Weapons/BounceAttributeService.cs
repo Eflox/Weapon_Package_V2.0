@@ -35,14 +35,24 @@ namespace Weapons
 
         public void OnHit(GameObject collidedObject)
         {
-            if (_bounceCount-- <= 0)
+            if (_bounceCount <= 0)
+            {
                 IsActive = false;
-            else
-                CalculateBounce(collidedObject);
+                return;
+            }
+
+            CalculateBounce(collidedObject);
+
+            _bounceCount--;
+
+            if (_bounceCount == 0)
+                IsActive = false;
         }
 
         private void CalculateBounce(GameObject excludedObject)
         {
+            Debug.Log("Bounce");
+
             var enemies = GameObject.FindGameObjectsWithTag("Enemy")
                             .Where(obj => obj != excludedObject)
                             .ToList();

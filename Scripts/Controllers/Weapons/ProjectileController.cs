@@ -91,6 +91,9 @@ namespace Weapons
             if (((1 << obj.gameObject.layer) & WeaponController.Config.CollisionLayers) == 0)
                 return;
 
+            if (_attributesUsingOnHit.Count == 0)
+                Destroy(gameObject);
+
             _attributesUsingOnHit
                 .Where(attribute => attribute.Order == 0)
                 .ToList()
@@ -104,9 +107,6 @@ namespace Weapons
 
             if (_attributesUsingLifeCycle.Count > 0)
                 RemoveNonActiveAttributeServices();
-
-            if (_attributesUsingOnHit.Count == 0)
-                Destroy(gameObject);
         }
 
         private void Update()
@@ -127,9 +127,6 @@ namespace Weapons
                 if (attribute is IUsesOnHit)
                     _attributesUsingOnHit.Remove(attribute as IUsesOnHit);
             }
-
-            if (inactiveAttributes.Count > 0)
-                Debug.Log($"Removed Attributes: {inactiveAttributes.Count}");
         }
     }
 }
