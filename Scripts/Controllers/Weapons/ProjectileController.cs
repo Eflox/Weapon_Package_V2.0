@@ -20,6 +20,7 @@ namespace Weapons
         private List<IUsesLifeCycle> _attributesUsingLifeCycle = new List<IUsesLifeCycle>();
         private List<IUsesFrameUpdate> _attributesUsingFrameUpdate = new List<IUsesFrameUpdate>();
         private List<IUsesOnHit> _attributesUsingOnHit = new List<IUsesOnHit>();
+        private List<IUsesOnDestroy> _attributesUsingOnDestroy = new List<IUsesOnDestroy>();
 
         #region Initiatation
 
@@ -55,6 +56,10 @@ namespace Weapons
 
             _attributesUsingOnHit = attributeServices
                 .OfType<IUsesOnHit>()
+                    .ToList();
+
+            _attributesUsingOnDestroy = attributeServices
+                .OfType<IUsesOnDestroy>()
                     .ToList();
         }
 
@@ -92,7 +97,11 @@ namespace Weapons
                 return;
 
             if (!_attributesUsingOnHit.Any(attribute => attribute.Order > 0))
-                Destroy(gameObject);
+            {
+                _attributesUsingOnDestroy.ForEach(attribute => attribute.OnDestroy());
+                Destroy(this.gameObject);
+                return;
+            }
 
             _attributesUsingOnHit
                 .Where(attribute => attribute.Order == 0)

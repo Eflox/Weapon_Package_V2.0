@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627ff1668092ed347b429453b5a0f0cd, type: 3}
   m_Name: Explode
   m_EditorClassIdentifier: 
-  Radius: 10
+  Radius: 4

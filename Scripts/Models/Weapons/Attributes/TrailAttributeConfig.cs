@@ -13,7 +13,7 @@ namespace Weapons
     {
         public float Width;
         public Color Color;
-        public float Time;
+        public float TTL;
 
         public IAttributeService CreateService() => new TrailAttributeService(this);
     }
