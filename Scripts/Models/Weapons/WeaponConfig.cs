@@ -18,8 +18,8 @@ public class WeaponConfig : ScriptableObject
 
     public List<IWeaponAttributeConfig> Attributes = new List<IWeaponAttributeConfig>();
 
-    [Range(1, 20)] public int FireRate = 3;
-    [Range(1, 20)] public float ProjectileSpeed = 2;
+    [Min(0.01f)] public float FireRate = 1;
+    [Min(0.01f)] public float ProjectileSpeed = 5;
 
     public Sprite WeaponSprite;
     public Sprite ProjectileSprite;
