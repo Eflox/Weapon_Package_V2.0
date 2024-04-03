@@ -14,6 +14,7 @@ namespace Weapons
 
         private ProjectileController _projectileController;
         private ExplodeAttributeConfig _config;
+        private Sprite _explosionSprite;
 
         public ExplodeAttributeService(IWeaponAttributeConfig config)
         {
@@ -23,10 +24,17 @@ namespace Weapons
         public void Initialize(ProjectileController projectileController)
         {
             _projectileController = projectileController;
+            _explosionSprite = Resources.Load<Sprite>("Weapons/Explosion");
         }
 
         public void OnHit(GameObject collidedObject)
         {
+            GameObject circle = new GameObject("Explosion");
+            var renderer = circle.AddComponent<SpriteRenderer>();
+            renderer.sprite = _explosionSprite;
+            var collider = circle.AddComponent<CircleCollider2D>();
+            collider.isTrigger = true;
+            circle.transform.localScale = new Vector3(_config.Radius, _config.Radius, 1f);
         }
     }
 }

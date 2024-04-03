@@ -11,6 +11,8 @@ namespace Weapons
     [CreateAssetMenu(fileName = "New Attribute", menuName = "Weapons/Attributes/Explode")]
     public class ExplodeAttributeConfig : ScriptableObject, IWeaponAttributeConfig
     {
+        public float Radius;
+
         public IAttributeService CreateService() => new ExplodeAttributeService(this);
     }
 }
