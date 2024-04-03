@@ -5,6 +5,7 @@
  */
 
 using UnityEngine;
+using Utils;
 
 namespace Weapons
 {
@@ -29,12 +30,20 @@ namespace Weapons
 
         public void OnHit(GameObject collidedObject)
         {
-            GameObject circle = new GameObject("Explosion");
-            var renderer = circle.AddComponent<SpriteRenderer>();
+            GameObject explosion = new GameObject("Explosion");
+            var renderer = explosion.AddComponent<SpriteRenderer>();
             renderer.sprite = _explosionSprite;
-            var collider = circle.AddComponent<CircleCollider2D>();
+
+            Color spriteColor = renderer.color;
+            spriteColor.a = 0.4f;
+            renderer.color = spriteColor;
+
+            var collider = explosion.AddComponent<CircleCollider2D>();
             collider.isTrigger = true;
-            circle.transform.localScale = new Vector3(_config.Radius, _config.Radius, 1f);
+            explosion.transform.localScale = new Vector3(_config.Radius, _config.Radius, 1f);
+            explosion.transform.position = _projectileController.transform.position;
+
+            explosion.AddComponent<DestroyAfter>().Initialize(0.05f);
         }
     }
 }

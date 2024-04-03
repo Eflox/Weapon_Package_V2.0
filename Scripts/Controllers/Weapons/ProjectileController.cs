@@ -91,7 +91,7 @@ namespace Weapons
             if (((1 << obj.gameObject.layer) & WeaponController.Config.CollisionLayers) == 0)
                 return;
 
-            if (_attributesUsingOnHit.Count == 0)
+            if (!_attributesUsingOnHit.Any(attribute => attribute.Order > 0))
                 Destroy(gameObject);
 
             _attributesUsingOnHit
