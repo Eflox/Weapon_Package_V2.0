@@ -16,6 +16,7 @@ namespace Weapons
         public WeaponController WeaponController;
         public Rigidbody2D Rigidbody2D;
         public SpriteRenderer SpriteRenderer;
+        public List<IAttributeConfig> AttributeConfigs = new List<IAttributeConfig>();
 
         private List<IUsesLifeCycle> _attributesUsingLifeCycle = new List<IUsesLifeCycle>();
         private List<IUsesFrameUpdate> _attributesUsingFrameUpdate = new List<IUsesFrameUpdate>();
@@ -27,18 +28,19 @@ namespace Weapons
         public void Initiate(WeaponController weaponController, List<IAttributeConfig> attributeConfigs)
         {
             WeaponController = weaponController;
+            AttributeConfigs = attributeConfigs;
 
-            SetupAttributes(attributeConfigs);
             SetupSpriteRenderer();
             SetupCollider();
             SetupRigidbody();
+            SetupAttributes();
         }
 
-        private void SetupAttributes(List<IAttributeConfig> attributeConfigs)
+        private void SetupAttributes()
         {
             List<IAttributeService> attributeServices = new List<IAttributeService>();
 
-            foreach (var attributeConfig in attributeConfigs)
+            foreach (var attributeConfig in AttributeConfigs)
             {
                 var serviceInstance = attributeConfig.CreateService();
                 attributeServices.Add(serviceInstance);
@@ -150,12 +152,8 @@ namespace Weapons
             if (viewportPosition.y < 0) normal = Vector2.up;
             else if (viewportPosition.y > 1) normal = Vector2.down;
 
-            //if (normal == _oldNormal) return;
-
             if (normal != Vector2.zero)
                 DestroyProjectile();
-
-            //_oldNormal = normal;
         }
 
         private void DestroyProjectile()

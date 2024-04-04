@@ -48,8 +48,6 @@ namespace Weapons
 
         private void CalculatePierce()
         {
-            Debug.Log("Pierce");
-
             var currentSpeed = _projectileController.Rigidbody2D.velocity.magnitude;
             var randomDeflection = Random.Range(-_config.Deflection, _config.Deflection);
             _projectileController.transform.Rotate(0, 0, randomDeflection);

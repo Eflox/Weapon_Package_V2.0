@@ -16,6 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a0e00b017c06784e8cb7143fbaf6837, type: 2}
   - {fileID: 11400000, guid: 18ef5ba801e279c4c849fde3a1312759, type: 2}
   - {fileID: 11400000, guid: 71c00d3060001394faacaaf2f69d901a, type: 2}
+  - {fileID: 11400000, guid: d0ed5ec1b0f855741b792a7ac3d78dd8, type: 2}
   FireRate: 0.15
   ProjectileSpeed: 6
   WeaponSprite: {fileID: -1441569358, guid: 011e339ab27a0584a8e269fb8053fcd6, type: 3}

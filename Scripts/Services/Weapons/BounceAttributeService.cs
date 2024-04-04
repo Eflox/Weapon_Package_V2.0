@@ -51,8 +51,6 @@ namespace Weapons
 
         private void CalculateBounce(GameObject excludedObject)
         {
-            Debug.Log("Bounce");
-
             var enemies = GameObject.FindGameObjectsWithTag("Enemy")
                             .Where(obj => obj != excludedObject)
                             .ToList();
