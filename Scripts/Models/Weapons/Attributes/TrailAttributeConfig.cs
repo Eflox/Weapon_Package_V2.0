@@ -14,6 +14,7 @@ namespace Weapons
         public float Width;
         public Color Color;
         public float TTL;
+        public float DamageTick;
 
         public IAttributeService CreateService() => new TrailAttributeService(this);
     }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b78d1f27f057d534f90942c5de63c033, type: 3}
   m_Name: Trail
   m_EditorClassIdentifier: 
-  Width: 0.11
-  Color: {r: 1, g: 0.89744365, b: 0.2117647, a: 0.4117647}
+  Width: 0.05
+  Color: {r: 1, g: 0.28641513, b: 0.2117647, a: 1}
   TTL: 1
+  DamageTick: 0.1

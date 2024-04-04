@@ -52,7 +52,7 @@ namespace Weapons
 
         private void HomeToTarget()
         {
-            if (_currentRotation < 10) _currentRotation += _config.HomingAcceleration;
+            if (_currentRotation < 50) _currentRotation += _config.HomingAcceleration;
 
             Vector2 directionToTarget = (_target.transform.position - _projectileController.transform.position).normalized;
             float angleToTarget = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
