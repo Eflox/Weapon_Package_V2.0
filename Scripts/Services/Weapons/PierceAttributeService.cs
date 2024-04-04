@@ -18,7 +18,7 @@ namespace Weapons
         private ProjectileController _projectileController;
         private int _pierceCount;
 
-        public PierceAttributeService(IWeaponAttributeConfig config)
+        public PierceAttributeService(IAttributeConfig config)
         {
             _config = (PierceAttributeConfig)config;
         }

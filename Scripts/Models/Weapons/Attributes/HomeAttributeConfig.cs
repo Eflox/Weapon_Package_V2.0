@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Weapons
 {
     [CreateAssetMenu(fileName = "New Attribute", menuName = "Weapons/Attributes/Home")]
-    public class HomeAttributeConfig : ScriptableObject, IWeaponAttributeConfig
+    public class HomeAttributeConfig : ScriptableObject, IAttributeConfig
     {
         public float HomingRadius;
         public float HomingAcceleration;

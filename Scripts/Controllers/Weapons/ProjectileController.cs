@@ -24,7 +24,7 @@ namespace Weapons
 
         #region Initiatation
 
-        public void Initiate(WeaponController weaponController, List<IWeaponAttributeConfig> attributeConfigs)
+        public void Initiate(WeaponController weaponController, List<IAttributeConfig> attributeConfigs)
         {
             WeaponController = weaponController;
 
@@ -34,7 +34,7 @@ namespace Weapons
             SetupRigidbody();
         }
 
-        private void SetupAttributes(List<IWeaponAttributeConfig> attributeConfigs)
+        private void SetupAttributes(List<IAttributeConfig> attributeConfigs)
         {
             List<IAttributeService> attributeServices = new List<IAttributeService>();
 
@@ -98,8 +98,7 @@ namespace Weapons
 
             if (!_attributesUsingOnHit.Any(attribute => attribute.Order > 0))
             {
-                _attributesUsingOnDestroy.ForEach(attribute => attribute.OnDestroy());
-                Destroy(this.gameObject);
+                DestroyProjectile();
                 return;
             }
 
@@ -121,6 +120,8 @@ namespace Weapons
         private void Update()
         {
             _attributesUsingFrameUpdate.ForEach(attribute => attribute.FrameUpdate());
+
+            CheckHitScreenEdge();
         }
 
         private void RemoveNonActiveAttributeServices()
@@ -136,6 +137,31 @@ namespace Weapons
                 if (attribute is IUsesOnHit)
                     _attributesUsingOnHit.Remove(attribute as IUsesOnHit);
             }
+        }
+
+        private void CheckHitScreenEdge()
+        {
+            Vector2 normal = Vector2.zero;
+            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
+
+            if (viewportPosition.x < 0) normal = Vector2.right;
+            else if (viewportPosition.x > 1) normal = Vector2.left;
+
+            if (viewportPosition.y < 0) normal = Vector2.up;
+            else if (viewportPosition.y > 1) normal = Vector2.down;
+
+            //if (normal == _oldNormal) return;
+
+            if (normal != Vector2.zero)
+                DestroyProjectile();
+
+            //_oldNormal = normal;
+        }
+
+        private void DestroyProjectile()
+        {
+            _attributesUsingOnDestroy.ForEach(attribute => attribute.OnDestroy());
+            Destroy(this.gameObject);
         }
     }
 }

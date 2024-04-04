@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Weapons
 {
     [CreateAssetMenu(fileName = "New Attribute", menuName = "Weapons/Attributes/Trail")]
-    public class TrailAttributeConfig : ScriptableObject, IWeaponAttributeConfig
+    public class TrailAttributeConfig : ScriptableObject, IAttributeConfig
     {
         public float Width;
         public Color Color;

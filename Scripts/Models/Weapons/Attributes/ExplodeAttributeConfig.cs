@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Weapons
 {
     [CreateAssetMenu(fileName = "New Attribute", menuName = "Weapons/Attributes/Explode")]
-    public class ExplodeAttributeConfig : ScriptableObject, IWeaponAttributeConfig
+    public class ExplodeAttributeConfig : ScriptableObject, IAttributeConfig
     {
         public float Radius;
 

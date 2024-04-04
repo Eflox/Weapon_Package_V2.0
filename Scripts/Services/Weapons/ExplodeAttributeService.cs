@@ -17,7 +17,7 @@ namespace Weapons
         private ExplodeAttributeConfig _config;
         private Sprite _explosionSprite;
 
-        public ExplodeAttributeService(IWeaponAttributeConfig config)
+        public ExplodeAttributeService(IAttributeConfig config)
         {
             _config = (ExplodeAttributeConfig)config;
         }

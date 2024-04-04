@@ -39,6 +39,8 @@ namespace Weapons
             GameObject projectile = new GameObject($"Projectile");
             ProjectileController projectileController = projectile.AddComponent<ProjectileController>();
 
+            projectileController.transform.position = this.transform.position;
+
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0;
             Vector2 direction = mousePosition - projectile.transform.position;

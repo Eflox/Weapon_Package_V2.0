@@ -21,7 +21,7 @@ namespace Weapons
         private BounceAttributeConfig _config;
         private int _bounceCount;
 
-        public BounceAttributeService(IWeaponAttributeConfig config)
+        public BounceAttributeService(IAttributeConfig config)
         {
             _config = (BounceAttributeConfig)config;
         }

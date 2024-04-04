@@ -4,6 +4,7 @@
  * Contact: c.dansembourg@icloud.com
  */
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -54,7 +55,9 @@ namespace Weapons
             if (_projectileController != null)
             {
                 Vector2 currentPos = _projectileController.transform.position;
-                const float minimumDistanceThreshold = 0.05f;
+
+                const float minimumDistanceThreshold = 0.3f; //LAGGG
+
                 bool shouldAddPoint = _pathPoints.Count == 0 || Vector2.Distance(_pathPoints.Last(), currentPos) > minimumDistanceThreshold;
 
                 if (shouldAddPoint)
@@ -81,6 +84,37 @@ namespace Weapons
             Color currentColor = Color.Lerp(_dimColor, _brightColor, lerpFactor);
             _lineRenderer.startColor = currentColor;
             _lineRenderer.endColor = currentColor;
+        }
+
+        public void StartFading()
+        {
+            StartCoroutine(FadeAway(0.8f, _config.TTL));
+        }
+
+        private IEnumerator FadeAway(float duration, float delayBeforeFading)
+        {
+            // Wait for the specified delay before starting the fade
+            yield return new WaitForSeconds(delayBeforeFading);
+
+            float currentTime = 0;
+
+            // Capture the initial colors
+            Color initialStartColor = _lineRenderer.startColor;
+            Color initialEndColor = _lineRenderer.endColor;
+
+            while (currentTime < duration)
+            {
+                float alpha = Mathf.Lerp(1f, 0f, currentTime / duration);
+
+                // Update the colors with the new alpha
+                _lineRenderer.startColor = new Color(initialStartColor.r, initialStartColor.g, initialStartColor.b, alpha);
+                _lineRenderer.endColor = new Color(initialEndColor.r, initialEndColor.g, initialEndColor.b, alpha);
+
+                currentTime += Time.deltaTime;
+                yield return null; // Wait until the next frame
+            }
+
+            Destroy(gameObject); // Destroy the GameObject after fading
         }
     }
 }

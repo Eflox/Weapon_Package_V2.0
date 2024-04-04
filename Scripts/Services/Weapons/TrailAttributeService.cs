@@ -5,7 +5,6 @@
  */
 
 using UnityEngine;
-using Utils;
 
 namespace Weapons
 {
@@ -15,8 +14,9 @@ namespace Weapons
         public int Order => (int)AttributeOrderOptions.Always;
 
         private GameObject _trail;
+        private TrailController _trailController;
 
-        public TrailAttributeService(IWeaponAttributeConfig config)
+        public TrailAttributeService(IAttributeConfig config)
         {
             _config = (TrailAttributeConfig)config;
         }
@@ -24,12 +24,13 @@ namespace Weapons
         public void Initialize(ProjectileController projectileController)
         {
             _trail = new GameObject("TempTrail");
-            _trail.AddComponent<TrailController>().Initialize(projectileController, _config);
+            _trailController = _trail.AddComponent<TrailController>();
+            _trailController.Initialize(projectileController, _config);
         }
 
         public void OnDestroy()
         {
-            _trail.AddComponent<DestroyAfter>().Initialize(_config.TTL);
+            _trailController.StartFading();
         }
     }
 }

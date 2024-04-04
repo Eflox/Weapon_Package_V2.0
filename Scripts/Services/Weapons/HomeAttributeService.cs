@@ -19,7 +19,7 @@ namespace Weapons
         private GameObject _target;
         private float _currentRotation;
 
-        public HomeAttributeService(IWeaponAttributeConfig config)
+        public HomeAttributeService(IAttributeConfig config)
         {
             _config = (HomeAttributeConfig)config;
         }

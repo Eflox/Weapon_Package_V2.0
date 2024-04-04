@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Weapons
 {
     [CreateAssetMenu(fileName = "New Attribute", menuName = "Weapons/Attributes/Pierce")]
-    public class PierceAttributeConfig : ScriptableObject, IWeaponAttributeConfig
+    public class PierceAttributeConfig : ScriptableObject, IAttributeConfig
     {
         public int Count;
         public float Deflection;
